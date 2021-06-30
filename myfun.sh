@@ -32,3 +32,16 @@ function check_mysqld(){
         systemctl start mysqld
     fi
 }
+
+# 设置每五分钟同步一次时间
+function time_update() {
+    host="server 210.72.145.44 iburst\nserver ntp.aliyun.com iburst"
+    cron=/var/spool/cron/root
+    sed -i -e 's/.*iburst/#&/' -e  "/.*iburst/a$host" /etc/chrony.conf
+    systemctl restart chronyd.service
+    chronyc sources -v
+
+    echo "#time sync at $(date +%F-%H:%M)" >> $cron
+    echo "*/5 * * * * /usr/bin/chronyc sources -v > /dev/null 2>&1" >> $cron
+    crontab -l
+}
