@@ -45,3 +45,9 @@ function time_update() {
     echo "*/5 * * * * /usr/bin/chronyc sources -v > /dev/null 2>&1" >> $cron
     crontab -l
 }
+
+# 获取随机数
+function get_a_number() {
+    num=$(awk -v num="$1" 'BEGIN{ srand(); print rand() * num}')
+    echo $num | awk -F. '{print $1}'
+}
