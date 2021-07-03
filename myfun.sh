@@ -56,3 +56,13 @@ function get_a_number() {
 function gen_a_string() {
 	echo $(echo test$RANDOM|md5sum|cut -c $1-$2)
 }
+
+# 输出报错信息
+function print_error_info(){
+    echo -e "\033[31m $1 \033[0m"
+}
+
+# 输出成功信息
+function print_success_info(){
+    echo -e "\033[32m $1 \033[0m"
+}
