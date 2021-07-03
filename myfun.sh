@@ -51,3 +51,8 @@ function get_a_number() {
     num=$(awk -v num="$1" 'BEGIN{ srand(); print rand() * num}')
     echo $num | awk -F. '{print $1}'
 }
+
+# 生成随机字符串
+function gen_a_string() {
+	echo $(echo test$RANDOM|md5sum|cut -c $1-$2)
+}
