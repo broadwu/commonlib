@@ -66,3 +66,12 @@ function print_error_info(){
 function print_success_info(){
     echo -e "\033[32m $1 \033[0m"
 }
+
+# 去除头尾的空格
+trim_string() {
+    # Usage: trim_string "   example   string    "
+    : "${1#"${1%%[^[:space:]]*}"}"
+    : "${_%"${_##*[^[:space:]]}"}"
+    printf '%s\n' "$_"
+}
+
