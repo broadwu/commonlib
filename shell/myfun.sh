@@ -75,3 +75,27 @@ trim_string() {
     printf '%s\n' "$_"
 }
 
+# 本机免密自动化脚本，需要安装expect
+function set_free_access() {
+    ips=(127.0.0.2 127.0.0.3 127.0.0.4)
+    rm -rf /root/.ssh/id_rsa*
+
+    expect -c "
+        spawn ssh-keygen
+        expect {
+            \"(/root/.ssh/id_rsa):\" {send \"\r\"; exp_continue}
+            \"empty for no passphrase):\" {send \"\r\"; exp_continue}
+            \"passphrase again:\" {send \"\r\"; exp_continue}
+            }
+        "
+    for ip in ${ips[*]}
+    do
+        expect -c "
+            spawn ssh-copy-id $ip
+            expect {
+                \"yes/no\" {send \"yes\r\"; exp_continue}
+                \"password:\" {send \"dragon5120\r\"; exp_continue}
+            }
+        "
+    done
+}
