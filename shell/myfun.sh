@@ -8,6 +8,21 @@ function isdigit() {
     fi
 }
 
+# 判断输入是否为字符
+function isalpha ()  # Tests whether *first character* of input string is alphabetic.
+{
+if [ -z "$1" ]                # No argument passed?
+then
+  return $FAILURE
+fi
+
+case "$1" in
+  [a-zA-Z]*) return $SUCCESS;;  # Begins with a letter?
+  *        ) return $FAILURE;;
+esac
+}
+
+
 # 判断URL是否有效
 
 function check_url() {
@@ -98,4 +113,25 @@ function set_free_access() {
             }
         "
     done
+}
+
+# 通过名称杀掉进程
+# Warning:
+#  -------
+#  This is a fairly dangerous script.
+#  Running it carelessly (especially as root)
+#+ can cause data loss and other undesirable effects.
+function kill_by_name() {
+	E_BADARGS=66
+
+	if test -z "$1"  # No command-line arg supplied?
+	then
+	  echo "Usage: `basename $0` Process(es)_to_kill"
+	  exit $E_BADARGS
+	fi
+
+
+	PROCESS_NAME="$1"
+	ps ax | grep "$PROCESS_NAME" | awk '{print $1}' | xargs -i kill {} 2&>/dev/null
+	exit $?
 }
