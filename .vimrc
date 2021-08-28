@@ -23,3 +23,8 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+
+"6. turn on matchit.Jump between opening and closing tags.
+set nocompatible
+filetype plugin on
+runtime macros/matchit.vim
