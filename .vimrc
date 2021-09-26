@@ -27,3 +27,6 @@ set softtabstop=4
 "6. turn on hightlight and incremental search
 set hlsearch
 set incsearch 
+
+"7. define a hot key to turn off hightlight
+nnoremap<silent> <C-l>  :<C-u>nohlsearch<CR><C-l>
