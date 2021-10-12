@@ -109,7 +109,7 @@ function set_free_access() {
             spawn ssh-copy-id $ip
             expect {
                 \"yes/no\" {send \"yes\r\"; exp_continue}
-                \"password:\" {send \"dragon5120\r\"; exp_continue}
+                \"password:\" {send \"password\r\"; exp_continue}
             }
         "
     done
